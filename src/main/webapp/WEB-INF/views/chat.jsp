@@ -68,7 +68,7 @@
 <body>
 	<form name="chatBotInteraction" method="post">
 	    <%-- Set the username from session or request --%>
-		<input type="hidden" id="hiddenUserName" name="userName" value="<% request.getAttribute("userName");%>"/>
+		<input type="hidden" id="hiddenUserName" name="userName" value='<%=request.getParameter("userName")%>'/>
 		<table style="float: left;">
 			<tr>
 				<td colspan="2">
