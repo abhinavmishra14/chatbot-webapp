@@ -7,31 +7,6 @@
 <title>Welcome</title>
 </head>
 <body>
-	<form action='interactWithUser' method="post">
-		<table style="float: left;">
-			<tr>
-				<td colspan="2">
-					<div align="left">
-						<h5>${greeting}</h5>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<div align="center">
-						<textarea name="answer" placeholder="Enter your messagehere..."
-							rows="10" cols="70"></textarea>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" class="sendBtn">
-					<div align="right">
-						<button type="submit" value="submit">Send</button>
-					</div>
-				</td>
-			</tr>
-		</table>
-	</form>
+	Hello there!
 </body>
 </html>
