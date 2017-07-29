@@ -1,6 +1,4 @@
-package com.github.abhinavmishra14.web.model;
-
-import org.hibernate.validator.constraints.NotBlank;
+package com.github.abhinavmishra14.rest.model;
 
 /**
  * The Class Chat.
@@ -8,15 +6,13 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Chat {
 	
 	/** The user name. */
-	@NotBlank(message = "UserName input must not be null in the request") 
 	private String userName;
 
 	/** The chat. */
 	private String chat;
 
-	/** The answer. */
-	@NotBlank(message = "Answer input must not be null!")
-	private String answer;
+	/** The user text. */
+	private String userText;
 
 	/**
 	 * Gets the user name.
@@ -55,20 +51,28 @@ public class Chat {
 	}
 
 	/**
-	 * Gets the answer.
+	 * Gets the user text.
 	 *
-	 * @return the answer
+	 * @return the user text
 	 */
-	public String getAnswer() {
-		return answer;
+	public String getUserText() {
+		return userText;
 	}
 
 	/**
-	 * Sets the answer.
+	 * Sets the user text.
 	 *
-	 * @param answer the new answer
+	 * @param userText the new user text
 	 */
-	public void setAnswer(final String answer) {
-		this.answer = answer;
+	public void setUserText(final String userText) {
+		this.userText = userText;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Chat [userName=" + userName + ", chat=" + chat + ", userText=" + userText + "]";
 	}
 }

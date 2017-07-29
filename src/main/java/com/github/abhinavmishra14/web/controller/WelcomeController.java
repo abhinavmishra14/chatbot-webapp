@@ -18,36 +18,21 @@
 package com.github.abhinavmishra14.web.controller;
 
 import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.abhinavmishra14.web.model.Chat;
-import com.github.abhinavmishra14.web.model.ChatResponse;
-
 /**
- * The Class ChatBotController.
+ * The Class WelcomeController.
  */
 @Controller
 @RequestMapping("/")
-public class ChatBotController {
-	
-	/** The Constant LOGGER. */
-	private static final Logger LOGGER = LoggerFactory.getLogger(ChatBotController.class);
+public class WelcomeController {
 	
 	/** The message source. */
 	@Autowired
@@ -64,8 +49,7 @@ public class ChatBotController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String welcome(final Locale locale, final ModelMap model) {
-		model.addAttribute("greeting",
-				"Hello There! <br/>" + messageSource.getMessage("chatbot.welcome", null, locale));
+		model.addAttribute("greeting", "Hello There! <br/>");
 		return "welcome";
 	}
 
@@ -82,37 +66,7 @@ public class ChatBotController {
 	 */
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public String welcome(final Locale locale, final ModelMap model, @RequestParam final String userName) {
-		model.addAttribute("greeting", messageSource.getMessage("chatbot.greetings", new String[] { userName }, locale)
-				+ "<br/>" + messageSource.getMessage("chatbot.welcome", null, locale));
+		model.addAttribute("greeting", messageSource.getMessage("chatbot.greetings", new String[] { userName }, locale));
 		return "chat";
-	}
-
-	/**
-	 * Chat.
-	 *
-	 * @param locale
-	 *            the locale
-	 * @param model
-	 *            the model
-	 * @param chat
-	 *            the chat
-	 * @param result
-	 *            the result
-	 * @return the string
-	 */
-	@RequestMapping(value = "/chat", method = RequestMethod.POST)
-	public ChatResponse chat(final Locale locale, @ModelAttribute @Valid final Chat chat, final BindingResult result) {
-		LOGGER.info("chat invoked..");
-		final ChatResponse chatResp = new ChatResponse();
-		if (result.hasErrors()) {
-			final Map<String, String> errors = result.getFieldErrors().stream()
-					.collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
-			chatResp.setValidated(false);
-			chatResp.setErrorMessages(errors);
-		} else {
-			chatResp.setValidated(true);
-			chatResp.setChat("hello");
-		}
-		return chatResp;
 	}
 }

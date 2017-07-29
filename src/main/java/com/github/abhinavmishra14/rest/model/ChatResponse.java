@@ -1,14 +1,19 @@
-package com.github.abhinavmishra14.web.model;
+package com.github.abhinavmishra14.rest.model;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ChatResponse.
  */
 public class ChatResponse {
 
-	/** The chat. */
-	private String chat;
+	/** The user text. */
+	private String userText;
+	
+	/** The bot message. */
+	private String botMessage;
 
 	/** The validated. */
 	private boolean validated;
@@ -17,21 +22,39 @@ public class ChatResponse {
 	private Map<String, String> errorMessages;
 
 	/**
-	 * Gets the chat.
+	 * Gets the user text.
 	 *
-	 * @return the chat
+	 * @return the user text
 	 */
-	public String getChat() {
-		return chat;
+	public String getUserText() {
+		return userText;
 	}
 
 	/**
-	 * Sets the chat.
+	 * Sets the user text.
 	 *
-	 * @param chat the new chat
+	 * @param userText the new user text
 	 */
-	public void setChat(final String chat) {
-		this.chat = chat;
+	public void setUserText(final String userText) {
+		this.userText = userText;
+	}
+
+	/**
+	 * Gets the bot message.
+	 *
+	 * @return the bot message
+	 */
+	public String getBotMessage() {
+		return botMessage;
+	}
+
+	/**
+	 * Sets the bot message.
+	 *
+	 * @param botMessage the new bot message
+	 */
+	public void setBotMessage(final String botMessage) {
+		this.botMessage = botMessage;
 	}
 
 	/**
@@ -58,6 +81,9 @@ public class ChatResponse {
 	 * @return the error messages
 	 */
 	public Map<String, String> getErrorMessages() {
+		if (this.errorMessages == null) {
+			this.errorMessages = new ConcurrentHashMap<String, String> ();
+		}
 		return errorMessages;
 	}
 

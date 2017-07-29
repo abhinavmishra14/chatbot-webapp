@@ -11,64 +11,75 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/css/style.css' />" />
 <script type="text/javascript"
-	src="<c:url value='/resources/js/jquery-1.4.3.min.js' />"></script>
+	src="<c:url value='/resources/js/jquery-3.2.1.min.js' />"></script>
+<script type="text/javascript"
+	src="<c:url value='/resources/js/chatbot-commons.js' />"></script>
+
 <script type="text/javascript">
-	function ajaxRequest(actionName, formData, callback, options) {
-		var optionsLocal = {
-			"showSpinner" : options
-		};
-
-		optionsLocal = $.extend(optionsLocal, options);
-
-		$.ajax({
-			url : actionName,
-			type : "POST",
-			cache : false,
-			data : formData,
-			dataType : "html",
-			context : document.body,
-			success : function(data) {
-				alert(data);
-			},
-			beforeSend : function() {
-				if (optionsLocal.showSpinner == true) {
-					$('#ajaxImage').show();
-					$('#ajaxBackground').show();
-				}
-			},
-			complete : function() {
-				if (optionsLocal.showSpinner == true) {
-					$('#ajaxImage').hide();
-					$('#ajaxBackground').hide();
-				}
-			},
-			error : function() {
-				//Hide the spinner div
-				$('#ajaxImage').hide();
-				$('#ajaxBackground').hide();
+	$(document).ready(function() {
+		$('#userText').keydown(function(e) {
+			var keypressed = event.keyCode || event.which;
+			if (keypressed == 9) {
+				sendChat();
 			}
 		});
-	};
-
+		
+		$('#userText').keypress(function(e) {
+			var keypressed = event.keyCode || event.which;
+			if (keypressed == 13) {
+				sendChat();
+			}
+		});
+	});
+	
 	function sendChat() {
-		alert($("#answer").val());
-		var formData = $('form[name=chatBotInteraction]').serialize();
-		alert(formData);
-		ajaxRequest("chat", formData, renderChat, {
-			"showSpinner" : false
-		})
+		//Clear errors
+		$("#valErr").remove();
+		var validationResp = validateForm("chatBotInteraction", [ "chat" ]);
+		var objKeys = Object.keys(validationResp);
+		if (objKeys != null && objKeys.length > 0) {
+			for ( var eachKey in validationResp) {
+				console.log(validationResp[eachKey]);
+				if (eachKey == "userName") {
+					alert(validationResp[eachKey]);
+				} else {
+					$('textarea[name=' + eachKey + ']').after(
+							'<span id="valErr" style="color:red;">'
+									+ validationResp[eachKey] + '</span>');
+				}
+			}
+			return false;
+		} else {
+			var formData = $('form[name=chatBotInteraction]').serializeArray();
+			ajaxRequest("chatBotInteraction", getFormData(formData),
+					renderChat, {
+						"showSpinner" : false
+					})
+		}
 	}
 
 	function renderChat(data, options) {
-		alert(data);
+		console.log(data);
+		var chatArea = $("#chat");
+		var userName = $("#userName");
+		var userInput = $("#userText");
+		userInput.val(""); // Set user input as blank
+
+		if (chatArea.val() != null || chatArea.val() != '') {
+			chatArea.append("\n"); //If chat is already initiated then appen a new line
+		}
+		chatArea.append(data.userText + "\n"); //Add userprovided input to chat area
+		chatArea.append(data.botMessage); // append bot message
+		//Auto Scroll to bottom
+		if (chatArea.length) {
+			chatArea.scrollTop(chatArea[0].scrollHeight - chatArea.height());
+		}
 	}
 </script>
 <title><spring:message code="chatbot.title" /></title>
 </head>
 <body>
-	<form name="chatBotInteraction" method="post">
-	    <%-- Set the username from session or request --%>
-		<input type="hidden" id="hiddenUserName" name="userName" value='<%=request.getParameter("userName")%>'/>
+	<div id="greeting">
 		<table style="float: left;">
 			<tr>
 				<td colspan="2">
@@ -77,30 +88,40 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2">
-					<div align="center">
-						<textarea id="chat" name="chat" rows="10" cols="70" readonly></textarea>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<div align="center">
-						<textarea id="answer" name="answer"
-							placeholder="Enter your messagehere..." rows="2" cols="70"></textarea>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" class="sendBtn">
-					<div align="right">
-						<spring:message code="chat.send" var="chatSend"></spring:message>
-						<button id="send" type="button" onclick="javascript:sendChat();">${chatSend}</button>
-					</div>
-				</td>
-			</tr>
 		</table>
-	</form>
+	</div>
+	<br style="clear: both;" />
+	<div id="chatbox" class="gradientBoxesWithOuterShadows">
+		<form name="chatBotInteraction" method="post">
+			<%-- Set the userName from session or request --%>
+			<input type="hidden" id="hiddenUserName" name="userName"
+				value='<%=request.getParameter("userName")%>' />
+			<table align="center">
+				<tr>
+					<td colspan="2">
+						<div align="center">
+							<textarea id="chat" name="chat" rows="14" cols="70" readonly></textarea>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div align="center">
+							<textarea id="userText" name="userText"
+								placeholder="Enter your messagehere..." rows="2" cols="70"></textarea>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="sendBtn">
+						<div align="right">
+							<spring:message code="chat.send" var="chatSend"></spring:message>
+							<button id="send" type="button" onclick="javascript:sendChat();">${chatSend}</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 </html>
