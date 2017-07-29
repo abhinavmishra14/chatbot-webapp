@@ -41,3 +41,12 @@ textarea {
 		color-stop(15%, white), color-stop(100%, #BDBDC9) );
 	background: -moz-linear-gradient(top, white 0%, white 55%, #BDBDC9 130%);
 }
+
+#divBottomRight {
+    position:fixed;
+    bottom:10px;
+    right:0px;
+    height:20px;
+    width:250px;
+    background-color:#cf8;
+}

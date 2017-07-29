@@ -14,7 +14,9 @@
 	src="<c:url value='/resources/js/jquery-3.2.1.min.js' />"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/chatbot-commons.js' />"></script>
-
+<script type="text/javascript"
+	src="<c:url value='/resources/js/config.js' />"></script>
+	
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#userText').keydown(function(e) {
@@ -51,7 +53,8 @@
 			return false;
 		} else {
 			var formData = $('form[name=chatBotInteraction]').serializeArray();
-			ajaxRequest("chatBotInteraction", getFormData(formData),
+			var formDataJson = getFormData(formData);
+			ajaxRequest(properties.actionName, formDataJson,
 					renderChat, {
 						"showSpinner" : false
 					})
@@ -59,7 +62,7 @@
 	}
 
 	function renderChat(data, options) {
-		console.log(data);
+		console.log(data); //Log response.
 		var chatArea = $("#chat");
 		var userName = $("#userName");
 		var userInput = $("#userText");
@@ -68,8 +71,8 @@
 		if (chatArea.val() != null || chatArea.val() != '') {
 			chatArea.append("\n"); //If chat is already initiated then appen a new line
 		}
-		chatArea.append(data.userText + "\n"); //Add userprovided input to chat area
-		chatArea.append(data.botMessage); // append bot message
+		chatArea.append("\n"+data.userText); //Add userprovided input to chat area
+		chatArea.append("\n"+data.botMessage); // append bot message
 		//Auto Scroll to bottom
 		if (chatArea.length) {
 			chatArea.scrollTop(chatArea[0].scrollHeight - chatArea.height());
