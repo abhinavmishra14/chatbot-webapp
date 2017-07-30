@@ -51,9 +51,12 @@ public class ChatBotInteractionController {
 			final String userText = chat.getUserText();
 			chatResp.setUserText(chat.getUserName()+ ": "+ userText); //return user provided input back.
 			
-			if (userText.toLowerCase().contains("hi")) {
+			if (userText.toLowerCase().contains("hi") 
+					|| userText.toLowerCase().contains("hello")) {
 				botResponse(messageSource.getMessage("hi", null, locale), chatResp);
-			} else if (userText.toLowerCase().contains("how are you")) {
+			} else if (userText.toLowerCase().contains("how are you") 
+					|| userText.toLowerCase().contains("what's up")
+					|| userText.toLowerCase().contains("whats up")) {
 				botResponse(messageSource.getMessage("how are you".replaceAll(" ", "_")+decider, null, locale), chatResp);
 			} else {
 				botResponse(messageSource.getMessage("rephrase"+decider, null, locale), chatResp);
