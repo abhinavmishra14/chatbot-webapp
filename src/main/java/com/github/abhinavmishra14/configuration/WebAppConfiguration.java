@@ -35,6 +35,8 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.github.abhinavmishra14.interceptor.LoggerInterceptor;
+
 /**
  * The Class WebAppConfiguration.
  */
@@ -102,6 +104,7 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter{
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(localeInterceptor());
+        registry.addInterceptor(new LoggerInterceptor());
     }
     
     /* (non-Javadoc)

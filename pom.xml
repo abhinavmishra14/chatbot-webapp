@@ -88,6 +88,12 @@
 			<version>${jackson.library}</version>
 		</dependency>
 
+        <dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160810</version>
+		</dependency>
+		
 		<dependency>
 		    <groupId>commons-lang</groupId>
 		    <artifactId>commons-lang</artifactId>
@@ -171,7 +177,7 @@
 							<failOnViolation>true</failOnViolation>
 							<configLocation>${basedir}/checkstyle.xml</configLocation>
 							<includes>com/**/*.java</includes>
-							<excludes>com/github/abhinavmishra14/**/*Test.java</excludes>
+							<excludes>com/github/abhinavmishra14/pojo/**/*.java, com/github/abhinavmishra14/**/*Test.java</excludes>
 						</configuration>
 					</execution>
 				</executions>
@@ -228,7 +234,10 @@
 
 					<!-- A list of files to exclude from checking. Can contain Ant-style 
 						wildcards and double wildcards. We are not excluding anything here. -->
-					<!-- <excludes> <exclude></exclude> </excludes> -->
+					<excludes> 
+					   <exclude>com/github/abhinavmishra14/pojo/**/*.java</exclude>
+					   <exclude>com/github/abhinavmishra14/**/*Test.java</exclude>
+					</excludes>
 
 					<!-- The output directory for the final HTML report. -->
 					<outputDirectory>${project.reporting.outputDirectory}</outputDirectory>
@@ -283,7 +292,7 @@
 
 					<!-- Indicates to analyze only given java packages, We are allowing 
 						everything here. -->
-					<!-- <onlyAnalyze>com.*</onlyAnalyze> -->
+					<onlyAnalyze>com.github.abhinavmishra14.*</onlyAnalyze>
 
 					<failOnError>true</failOnError>
 				</configuration>

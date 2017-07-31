@@ -1,0 +1,12 @@
+{
+  "intents": {
+	"questions": [
+	    "What is your first name ?",
+		"What is your last name ?",
+		"What is your ZIP code?",
+		"What is your DOB?",
+		"What is your phone number?",
+		"What is your email?"
+	]
+  }
+}
