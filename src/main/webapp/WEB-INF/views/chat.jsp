@@ -19,6 +19,7 @@
 	
 <script type="text/javascript">
 	$(document).ready(function() {
+		//Tab press
 		$('#userText').keydown(function(e) {
 			var keypressed = event.keyCode || event.which;
 			if (keypressed == 9) {
@@ -26,6 +27,7 @@
 			}
 		});
 		
+		//Press enter key
 		$('#userText').keypress(function(e) {
 			var keypressed = event.keyCode || event.which;
 			if (keypressed == 13) {
