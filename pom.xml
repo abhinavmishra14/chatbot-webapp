@@ -12,7 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version>1.8</java-version>
 		<springframework.version>4.3.9.RELEASE</springframework.version>
-		<jackson.library>2.10.0</jackson.library>
+		<jackson.library>2.10.2</jackson.library>
 		<org.slf4j-version>1.7.25</org.slf4j-version>
 		<bottom>Copyright © 2017. Abhinav Kumar Mishra. All rights reserved.</bottom>
 	</properties>
@@ -155,8 +155,6 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			<!-- Project is JDK 1.7 compliant, so source and target version should 
-				be 1.7 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
